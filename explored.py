@@ -7,15 +7,15 @@ class Explored(object):
 
     def __init__(self):
         "__init__() - Create an empty explored set"
-
-        raise NotImplemented
+        self.exploredSet = {}
         
     def exists(self, state):
         """exists(state) - Has this state already been explored?
         Returns True or False, state must be hashable
         """
-
-        raise NotImplemented
+        if hash(state) in self.exploredSet:
+            return True
+        return False
     
     def add(self, state):
         """add(state) - add given state to the explored set.  
@@ -29,5 +29,16 @@ class Explored(object):
         # Note that when you access a Python dictionary by a
         # non existant key, it throws a KeyError
 
-        raise NotImplemented
+        if self.exists(state):
+            #add to bucket list
+            raise NotImplemented
+        else:
+            self.exploredSet.update({hash(state): state})
+
+
             
+theSet = Explored()
+theSet.add((4,3,2))
+print(theSet.exists((4,3,2)))
+
+print(theSet.exists((4,3,3)))

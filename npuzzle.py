@@ -16,7 +16,7 @@ class NPuzzle(Problem):
         specified state instead of being generated randomly.
         
         The parent's class constructor is then called with the TileBoard
-        instance any any remaining arguments captured in **kwargs.
+        instance and any remaining arguments captured in **kwargs.
         """
         
         # Note on **kwargs:
@@ -26,25 +26,23 @@ class NPuzzle(Problem):
         # as if each entry was a keyword argument:
         #    e.g. foobar(arg1, arg2, …, argn, **kwargs).
 
-        # initialize parent
-        super().__init__(self.boardsize, self.boardsize)
+        self.theBoard = TileBoard(n, force_state=force_state)
 
-        raise NotImplemented
+        # initialize parent
+        super().__init__(self, self.theBoard, **kwargs)
+
 
     def actions(self, state):
         "actions(state) - find a set of actions applicable to specified state"
-
-        raise NotImplemented
+        return state.get_actions()
     
     def result(self, state, action):
         "result(state, action)- apply action to state and return new state"
-
-        raise NotImplemented
+        return state.move(action)
     
     def goal_test(self, state):
         "goal_test(state) - Is state a goal?"
-
-        raise NotImplemented
+        return state.solved()
 
     
         
