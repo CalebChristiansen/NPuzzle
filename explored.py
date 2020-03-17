@@ -1,6 +1,6 @@
 '''
 
-@author: mroch
+@author: Caleb
 '''
 class Explored(object):
     "Maintain an explored set.  Assumes that states are hashable"
@@ -11,7 +11,7 @@ class Explored(object):
         
     def exists(self, state):
         """exists(state) - Has this state already been explored?
-        Returns True or False, state must be hashable
+        Returns True or False, state is hashable
         """
         if hash(state) in self.exploredSet:     #check for hash equality
             list = self.exploredSet[hash(state)]
@@ -27,7 +27,7 @@ class Explored(object):
         """
         
         # The hash function is a Python builtin that generates
-        # a hash value from its argument.  Use this to create
+        # a hash value from its argument.  Used this to create
         # a dictionary key.  Handle collisions by storing 
         # states that hash to the same key in a bucket list.
         # Note that when you access a Python dictionary by a
