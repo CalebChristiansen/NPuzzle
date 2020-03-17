@@ -48,15 +48,50 @@ import math
 
 class BreadthFirst:
     "BredthFirst - breadthfirst search"
-    pass
+
+    @classmethod
+    def g(cls, parentnode, action, childnode):
+        return childnode.depth
+    @classmethod
+    def h(cls, state):
+        return 0
 
 class DepthFirst:
     "DepthFirst - depth first search"
-    pass
+
+    @classmethod
+    def g(cls, parentnode, action, childnode):
+        return -childnode.depth
+    @classmethod
+    def h(cls, state):
+        return 0
         
 class Manhattan:
     "Manhattan Block Distance heuristic"
-    pass
+    @classmethod
+    def g(cls, parentnode, action, childnode):
+        return childnode.depth
+    @classmethod
+    def h(cls, state):
+        manhattandist = 0
+        stateLocs = {}
+        for i in range(state.get_rows()):
+            for j in range(state.get_cols()):
+                item = state.get(i,j)       #get the number at these indices
+                stateLocs[item] = (i,j)     #Store indices in a dictionary, access with number
+        goalTuple = state.goals[0]
+        for i in range(state.get_rows()):
+            for j in range(state.get_cols()):
+                trueIndex = i*state.get_rows() + j
+                item = goalTuple[trueIndex]       #get the number at these indices
+                i_orig, j_orig = stateLocs[item]
+                manhattandist = manhattandist + abs(i_orig-i) + abs(j_orig-j)
+        return manhattandist
+
+
+
+
+
                 
 
        

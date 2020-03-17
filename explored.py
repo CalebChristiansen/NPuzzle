@@ -13,8 +13,12 @@ class Explored(object):
         """exists(state) - Has this state already been explored?
         Returns True or False, state must be hashable
         """
-        if hash(state) in self.exploredSet:
-            return True
+        if hash(state) in self.exploredSet:     #check for hash equality
+            list = self.exploredSet[hash(state)]
+            for s in list:
+                if state == s:
+                    #print("found a state inside")
+                    return True                     #check for node equality
         return False
     
     def add(self, state):
@@ -30,15 +34,10 @@ class Explored(object):
         # non existant key, it throws a KeyError
 
         if self.exists(state):
-            #add to bucket list
-            raise NotImplemented
+            list = self.exploredSet[hash(state)]
+            list.append(state)
+            self.exploredSet.update({hash(state): list})
         else:
-            self.exploredSet.update({hash(state): state})
+            self.exploredSet.update({hash(state): [state]})
 
 
-            
-theSet = Explored()
-theSet.add((4,3,2))
-print(theSet.exists((4,3,2)))
-
-print(theSet.exists((4,3,3)))

@@ -29,7 +29,7 @@ class NPuzzle(Problem):
         self.theBoard = TileBoard(n, force_state=force_state)
 
         # initialize parent
-        super().__init__(self, self.theBoard, **kwargs)
+        super().__init__(self.theBoard, **kwargs)
 
 
     def actions(self, state):
@@ -39,7 +39,7 @@ class NPuzzle(Problem):
     def result(self, state, action):
         "result(state, action)- apply action to state and return new state"
         return state.move(action)
-    
+
     def goal_test(self, state):
         "goal_test(state) - Is state a goal?"
         return state.solved()

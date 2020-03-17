@@ -67,5 +67,55 @@ def graph_search(problem, verbose=False, debug=False):
     path - list of actions to solve the problem or None if no solution was found
     nodes_explored - Number of nodes explored (dequeued from frontier)
     """
+    rootNode = Node(problem,problem.initial)
+    frontier = PriorityQueue()
+    frontier.append(rootNode)
+    frontierHash = {}
+    frontierHash[hash(rootNode)] = rootNode
+    done = found = False
+    exploredNodes = Explored()
 
-    raise NotImplemented
+
+    while not done:
+        node = frontier.pop()
+        frontierHash.pop(hash(node), None)
+        #print(node)
+        exploredNodes.add(node)
+        if node.problem.goal_test(node.state):
+            found = done = True
+            #print("finished with solution")
+        else:
+            nodes = []
+            for n in node.expand(node.problem):
+                #may need to come back and compare boards instead of nodes
+                if (hash(n) not in frontierHash or frontierHash[hash(n)] != n) and exploredNodes.exists(n) == False:
+                    #print("adding to the frontier")
+                    nodes.append(n)
+            for n in nodes:
+                frontier.append(n)
+                frontierHash[hash(n)] = n
+            if len(frontier) == 0:
+                print("finished, no solution")
+                done = True
+
+    if verbose == True:
+        #print the path to the solution
+        if found:
+            path = node.path()
+            solution = node.solution()
+            print("Solution in ", len(solution), "moves")
+            print("Initial state")
+            counter = 1
+            for item in path:
+                print(item.state)
+                if counter <= len(solution):
+                    print("Move ", counter, " - ", solution[counter-1])
+                counter = counter + 1
+        else:
+            print("No solution found")
+
+    if found == True:
+        return (node.solution(), len(node.path()))
+    else:
+        return (None, None)
+
